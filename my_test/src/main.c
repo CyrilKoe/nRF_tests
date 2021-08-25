@@ -23,7 +23,8 @@
   (byte & 0x2 ? '1' : '0'), \
   (byte & 0x1 ? '1' : '0')
 
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+//#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+//#define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 typedef enum
 {
@@ -80,7 +81,7 @@ void main(void)
 static void fsm_switch_state(uint32_t millis_pressed) {
 	switch(fsm_current_state) {
 		case STATE_IDLE:
-			fsm_next_state = (millis_pressed > 1000) ? STATE_LIGHTING : fsm_current_state;
+			fsm_next_state = (millis_pressed >= 1000) ? STATE_LIGHTING : fsm_current_state;
 			break;
 		default:
 			break;
@@ -95,7 +96,7 @@ void fsm_behavior()
 	uint32_t time_in_state = (k_uptime_get_32() - time_last_state_change);
 	switch(fsm_current_state) {
 		case STATE_LIGHTING:
-			dk_set_led(leds[MAX((int) (time_in_state/1000), 3)] , 1);
+			dk_set_led(leds[MIN((int) (time_in_state/1000), 3)] , 1);
 			break;
 		default:
 			break;
