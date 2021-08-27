@@ -1,16 +1,12 @@
 #include "constants.h"
 #include "fsm.h"
 
-#if defined(CONFIG_ARCH_POSIX)
-#define printk printf
-#else
 #include <dk_buttons_and_leds.h>
 #include <sys/printk.h>
-#endif
 
 // FSM states
 fsm_state_t fsm_current_state, fsm_next_state;
-bool state_change_request;
+uint8_t state_change_request;
 // Time events recordings
 uint32_t time_last_pressed, time_last_state_change; // overflow only after 2982 days
 
@@ -24,7 +20,7 @@ const uint8_t leds_msk[4] = {LED_1_MSK, LED_2_MSK, LED_3_MSK, LED_4_MSK};
  * Computes the next fsm state
  * this function is only called in case of event (state_change_request turned to true, or button pressed)
  */
-void fsm_switch_state(uint32_t current_time) {
+void fsm_switch_state(uint8_t has_button_event, uint32_t current_time) {
 
 	uint32_t millis_pressed = current_time - time_last_pressed;
 	uint32_t millis_in_state = current_time - time_last_state_change;
@@ -54,7 +50,7 @@ void fsm_switch_state(uint32_t current_time) {
 	time_last_state_change = (fsm_next_state != fsm_current_state) ? current_time : time_last_state_change;
 
 	fsm_current_state = fsm_next_state;
-	state_change_request = false;
+	state_change_request = 0;
 }
 
 /* Function : fsm_behaviors
@@ -82,18 +78,21 @@ void fsm_behavior(uint32_t current_time)
 			dk_set_leds_state(on_mask, off_mask);
 			// Set change signal if all leds are on
 			if(!off_mask && on_mask)
-				state_change_request = true;
+				state_change_request = 1;
 			break;
 
 		case STATE_LIGHTED:
 			if(millis_in_state >= 2000) {
 				dk_set_leds_state(0, leds_msk[0]|leds_msk[1]|leds_msk[2]|leds_msk[3]);
-				state_change_request = true;
+				state_change_request = 1;
 			}
 			break;
 	
 		case STATE_BLINKING:
-			dk_set_led(leds[0], (millis_in_state % 1000) > 500);
+			if(millis_in_state % 1000 > 500)
+				dk_set_leds_state(leds_msk[0], leds_msk[1]|leds_msk[2]|leds_msk[3]);
+			else
+				dk_set_leds_state(0, leds_msk[0]|leds_msk[1]|leds_msk[2]|leds_msk[3]);
 			break;
 	
 		case STATE_SHUTTING:
@@ -109,7 +108,7 @@ void fsm_behavior(uint32_t current_time)
 			dk_set_leds_state(on_mask, off_mask);
 			// Set change signal if all leds are off
 			if(!on_mask && off_mask)
-				state_change_request = true;
+				state_change_request = 1;
 			break;
 
 		default:
@@ -118,7 +117,7 @@ void fsm_behavior(uint32_t current_time)
 	}
 
 	if (state_change_request)
-		fsm_switch_state(current_time);
+		fsm_switch_state(0, current_time);
 
 }
 
@@ -138,7 +137,7 @@ void fsm_input_button(uint32_t button_state, uint32_t has_changed, uint32_t curr
 				uint32_t milliseconds_pressed = time_released - time_last_pressed;
 				printk("button has been released at %u , it was pressed for %u ms\n", time_released, milliseconds_pressed);
 
-				fsm_switch_state(current_time);
+				fsm_switch_state(1, current_time);
 			}
 			time_last_pressed = 0;
 		} else

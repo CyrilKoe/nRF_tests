@@ -19,7 +19,7 @@ typedef enum
 
 // FSM functions
 void fsm_behavior(uint32_t current_time);
-void fsm_switch_state(uint32_t current_time);
+void fsm_switch_state(uint8_t has_button_event, uint32_t current_time);
 void fsm_input_button(uint32_t button_state, uint32_t has_changed, uint32_t current_time);
 
 
