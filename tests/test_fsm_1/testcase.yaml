@@ -1,0 +1,3 @@
+tests:
+  unity.test_fsm_1:
+    tags: example
