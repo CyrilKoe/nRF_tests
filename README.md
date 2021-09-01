@@ -1,4 +1,4 @@
-## Set-up your environment on Windows 10
+## Set-up your environment on Windows 10 (not recommanded)
 ### Install git
 https://git-scm.com/download/win
 <br/><br/>
@@ -66,7 +66,7 @@ Try using the command line tools. To do so go on the toolchain manager
 
 <br/><hr><br/>
 
-## Set-up your environment on Windows manually
+## Set-up your environment on Windows manually (recommanded)
 ### File tree
 In the next part you will dowload two files `ncs` containing the SDK and `ses` containing the Segger IDE. \
 I recommand to organize your folders as follow : 
@@ -127,8 +127,10 @@ code .
 By opening the full repository and not just the app folder VSCode will be able to recognize all the .h folders from zephyr and the SDK and help you coding. \
 Now connect your board and try building and flashing :
 ```
-cd
+cd nRF_tests\app
+west build -b nrf52dk_nrf52832 && west flash
 ```
+This should compile and flash your card. You can then go the section "__Create a project__ : Start running" and "__Testing a project__ : Explanations and run"
 
 <br/><hr><br/>
 
