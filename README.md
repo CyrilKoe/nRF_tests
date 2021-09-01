@@ -72,11 +72,12 @@ In the next part you will dowload two files `ncs` containing the SDK and `ses` c
 I recommand to organize your folders as follow : 
 
 wrlds \
+├── gnuarmemb \
 ├── ncs \
 ├── nRF_tests (this repository) \
-└── ses
+└── ses (optionnal)
 
-### Downloads
+### Downloads and set-up the command line environment
 First install `chocolatey` (a package manager) with a `powershell` as administrator. \
 https://chocolatey.org/install \
 Then executes the following commands in an administrator command shell `cmd.exe`.
@@ -96,6 +97,37 @@ west update
 pip3 install -r zephyr/scripts/requirements.txt
 pip3 install -r nrf/scripts/requirements.txt
 pip3 install -r bootloader/mcuboot/scripts/requirements.txt
+```
+Now you need to download the `GCC` cross compiler there : https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads . \
+Download the windows zip version and extract it in your wrlds folder and rename it `gnuarmemb`. \
+Finally you will set up a few environment variables :
+<p align="center">
+    <img src="medias/tutorial_zephyr_base.jpg" alt="Select current project" width="300" />
+</p>
+
+```
+ZEPHYR_TOOLCHAIN_VARIANT=gnuarmemb
+GNUARMEMB_TOOLCHAIN_PATH=C:\Users\cyril\Documents\wrlds\gnuarmemb
+ZEPHYR_BASE=C:\Users\cyril\Documents\wrlds\ncs\zepyr
+```
+Now you should be able to build but you still need to build an application with `west` but you still need to install `nrfjprog` to flash your device. \
+Extract the first folder where you want and run the installer (__do not unzip__ `pynrfjprog-xxx.zip`)
+<p align="center">
+    <img src="medias/tutorial_install_jlink.jpg" alt="Select current project" width="600" />
+</p>
+Now everything is installed.
+### Code build and flash
+As you can see for now I did not install the Segger Embedded Studio IDE. I recommand to code with Visual Studio Code. Simply install VSCode here : \
+
+Then open your development environment with :
+```
+cd C:\Users\cyril\Documents\wrlds
+code .
+```
+By opening the full repository and not just the app folder VSCode will be able to recognize all the .h folders from zephyr and the SDK and help you coding. \
+Now connect your board and try building and flashing :
+```
+cd
 ```
 
 <br/><hr><br/>
