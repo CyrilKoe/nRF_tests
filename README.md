@@ -66,6 +66,41 @@ Try using the command line tools. To do so go on the toolchain manager
 
 <br/><hr><br/>
 
+## Set-up your environment on Windows manually
+### File tree
+In the next part you will dowload two files `ncs` containing the SDK and `ses` containing the Segger IDE. \
+I recommand to organize your folders as follow : 
+
+wrlds \
+├── ncs \
+├── nRF_tests (this repository) \
+└── ses
+
+### Downloads
+First install `chocolatey` (a package manager) with a `powershell` as administrator. \
+https://chocolatey.org/install \
+Then executes the following commands in an administrator command shell `cmd.exe`.
+```
+choco feature enable -n allowGlobalConfirmation
+choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+choco install ninja gperf python git
+```
+Now close your command shell and open an other shell (`cmd.exe`) as a normal user. Install `west` (a repository managment system that creates a developing environment). And download the SDK 1.6.0 :
+```
+pip3 install west
+cd C:\Users\cyril\Documents\wrlds
+mkdir ncs
+cd ncs
+west init -m https://github.com/nrfconnect/sdk-nrf --mr v1.6.0
+west update
+pip3 install -r zephyr/scripts/requirements.txt
+pip3 install -r nrf/scripts/requirements.txt
+pip3 install -r bootloader/mcuboot/scripts/requirements.txt
+```
+
+<br/><hr><br/>
+
+
 ## Set-up your environment on Linux
 ### File tree
 In the next part you will dowload two files `ncs` containing the SDK and `ses` containing the Segger IDE. \
