@@ -86,7 +86,7 @@ choco feature enable -n allowGlobalConfirmation
 choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 choco install ninja gperf python git
 ```
-Now close your command shell and open an other shell (`cmd.exe`) as a normal user. Install `west` (a repository managment system that creates a developing environment). And download the SDK 1.6.0 :
+Now close your command shell and open an other one (`cmd.exe`) as administator. Install `west` (a repository managment system that creates a developing environment). And download the SDK 1.6.0 :
 ```
 pip3 install west
 cd C:\Users\cyril\Documents\wrlds
@@ -102,7 +102,7 @@ Now you need to download the `GCC` cross compiler there : https://developer.arm.
 Download the windows zip version and extract it in your wrlds folder and rename it `gnuarmemb`. \
 Finally you will set up a few environment variables :
 <p align="center">
-    <img src="medias/tutorial_zephyr_base.jpg" alt="Select current project" width="300" />
+    <img src="medias/tutorial_zephyr_base.jpg" alt="Set zephyr environment variable" width="300" />
 </p>
 
 ```
@@ -113,7 +113,7 @@ ZEPHYR_BASE=C:\Users\cyril\Documents\wrlds\ncs\zepyr
 Now you should be able to build but you still need to build an application with `west` but you still need to install `nrfjprog` to flash your device. \
 Extract the first folder where you want and run the installer (__do not unzip__ `pynrfjprog-xxx.zip`)
 <p align="center">
-    <img src="medias/tutorial_install_jlink.jpg" alt="Select current project" width="600" />
+    <img src="medias/tutorial_install_jlink.jpg" alt="Installing JLink" width="600" />
 </p>
 Now everything is installed.
 ### Code build and flash
@@ -188,7 +188,7 @@ _( Issue : "ninja: error: loading 'build.ninja': No such file or directory" or i
 Now open `JLinkRTTViewer` (`.exe` on windows and command line on Linux) and connect it to the board.
 
 <p align="center">
-    <img src="medias/tutorial_rttviewer.jpg" alt="Select current project" width="250" />
+    <img src="medias/tutorial_rttviewer.jpg" alt="Use JLinkRTTViwer" width="250" />
 </p>
 
 _( Issue : "I don't receive anything" -> When you flash the card you loose the connection. Try `disconnect` and `connect` in the top bar. Try clicking on the reboot button of the board and you should at least see the OS booting message. )_
