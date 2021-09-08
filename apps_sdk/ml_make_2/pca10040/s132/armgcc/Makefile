@@ -28,32 +28,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
-  $(PROJ_DIR)/main.cpp \
+  $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh_soc.c
-
-# edge impulse
-#SRC_FILES += \
-  $(PROJ_DIR)/edge-impulse-sdk/tensorflow/lite/c/common.c \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/BasicMathFunctions/*.c) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/FastMathFunctions/*.c) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/StatisticsFunctions/*.c) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/TransformFunctions/*fft*.c) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/CommonTables/*.c) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/CMSIS/DSP/Source/TransformFunctions/*bit*.c) \
-  $(PROJ_DIR)/$(wildcard tflite-model/*.cpp) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/dsp/kissfft/*.cpp) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/dsp/dct/*.cpp) \
-  $(PROJ_DIR)/$(wildcard ./edge-impulse-sdk/dsp/memory.cpp) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/kernels/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/kernels/internal/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/micro/kernels/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/micro/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/micro/memory_planner/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/tensorflow/lite/core/api/*.cc) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/porting/posix/*.c*) \
-  $(PROJ_DIR)/$(wildcard edge-impulse-sdk/porting/mingw32/*.c*)
 
 # Include folders common to all targets
 INC_FOLDERS += \
@@ -109,14 +87,9 @@ CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin -fshort-enums
-# edge impulse
-CFLAGS += -g -DTF_LITE_DISABLE_X86_NEON=1 -DEI_CLASSIFIER_ENABLE_DETECTION_POSTPROCESS_OP=1 -Wno-strict-aliasing
-CFLAGS += -DNDEBUG
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-# edge impulse
-CXXFLAGS += -std=c++14
 
 # Assembler flags common to all targets
 ASMFLAGS += -g3
@@ -158,6 +131,8 @@ LIB_FILES += -lc -lnosys -lm -lstdc++
 
 # Default target - first one defined
 default: nrf52832_xxaa
+
+edge: 
 
 # Print all targets that can be built
 help:
