@@ -19,6 +19,6 @@ CONFIG_ICM20948=y
 
 __On Linux__
 ```
-ln -s $(pwd) $ZEPHYR_BASE/drivers/sensor/icm20948
+ln -s $(pwd)/icm20948 $ZEPHYR_BASE/drivers/sensor/icm20948
 ln -s $(pwd)/invensense,icm20948.yaml $ZEPHYR_BASE/dts/bindings/sensor/invensense,icm20948.yaml
 ```

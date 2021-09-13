@@ -2,5 +2,5 @@
 
 __On Linux__
 ```
-ln -s $(pwd)arm/custom_berg_1 $ZEPHYR_BASE/boards/arm/custom_berg_1
+ln -s $(pwd)/arm/custom_berg_1 $ZEPHYR_BASE/boards/arm/custom_berg_1
 ```

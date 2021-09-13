@@ -1,0 +1,12 @@
+arduino_i2c: &i2c0 {
+	compatible = "nordic,nrf-twi";
+	status = "okay";
+	sda-pin = <15>;
+	scl-pin = <14>;
+        icm20948@68 {
+		compatible = "invensense,icm20948";
+		reg = <0x68>;
+		label = "ICM20948";
+		//alert-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+	};
+};
