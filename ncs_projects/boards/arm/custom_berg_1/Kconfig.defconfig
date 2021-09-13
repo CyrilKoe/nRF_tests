@@ -1,0 +1,11 @@
+# nRF52 DK CUSTOM BERG 1 board configuration
+
+if BOARD_NRF52DK_CUSTOM_BERG_1
+
+config BOARD
+	default "nrf52dk_custom_berg_1"
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_NRF52DK_CUSTOM_BERG_1

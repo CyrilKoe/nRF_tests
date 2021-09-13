@@ -1,0 +1,5 @@
+# nRF52 DK CUSTOM BERG 1 board configuration
+
+config BOARD_NRF52DK_CUSTOM_BERG_1
+	bool "nRF52 DK NRF52832"
+	depends on SOC_NRF52832_QFAA
