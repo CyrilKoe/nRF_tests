@@ -48,8 +48,36 @@ void test_leds_output_1(void)
 	uint32_t current_time = 1000;
 	fsm_switch_state(true, current_time);
 
+	TEST_ASSERT_EQUAL_INT(time_last_state_change, current_time);
+
 	fsm_behavior(current_time);
+
 	current_time += 500;
+
+	fsm_behavior(current_time);
+}
+
+// Button is not pressed enough
+void test_leds_output_2(void)
+{
+	__wrap_dk_set_leds_state_Stub(callback_set_leds_state);
+
+	fsm_current_state = STATE_LIGHTING;
+	fsm_next_state = STATE_LIGHTING;
+
+	time_last_state_change = 1000;
+	time_last_pressed = 1500;
+	uint32_t current_time = 2000;
+
+	fsm_switch_state(true, current_time);
+
+	TEST_ASSERT_EQUAL_INT(fsm_next_state, STATE_LIGHTING);
+	TEST_ASSERT_EQUAL_INT(fsm_current_state, STATE_LIGHTING);
+
+	fsm_behavior(current_time);
+
+	current_time += 500;
+
 	fsm_behavior(current_time);
 }
 
@@ -66,13 +94,16 @@ void main(void)
 }
 
 void callback_set_leds_state(uint32_t led_on_mask, uint32_t led_off_mask, int call_count) {
+	printf("on : %u  off : %u\n", led_on_mask, led_off_mask);
 	switch(call_count) {
 		case 0:
-			TEST_ASSERT_EQUAL_INT(0, led_on_mask);
-			TEST_ASSERT_EQUAL_INT(0, led_off_mask);
+			TEST_ASSERT_EQUAL_INT(8+4, led_on_mask);
+			TEST_ASSERT_EQUAL_INT(2+1, led_off_mask);
+			break;
 		case 1:
-			TEST_ASSERT_EQUAL_INT(0xF, led_on_mask);
-			TEST_ASSERT_EQUAL_INT(0, led_off_mask);
+			TEST_ASSERT_EQUAL_INT(8+4+2, led_on_mask);
+			TEST_ASSERT_EQUAL_INT(1, led_off_mask);
+			break;
 		default:
 			break;
 	}
