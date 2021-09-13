@@ -1,0 +1,5 @@
+config ICM20948
+	bool "ICM20948 sensor"
+	depends on I2C
+	help
+	  Enable driver for the TH02 temperature sensor.
