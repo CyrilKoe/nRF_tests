@@ -1,4 +1,5 @@
 This repository contains an introduction to the usage of the nRF connect SDK. It was realized for a job interview.
+It contains three simple projects, one simple fsm which transitions are based on buttons inputs, one simple app that communicates with an accelerometer's driver, and one simple app that uses Edge Impulse SDK for embedded ML.
 
 ## Set-up your environment on Windows 10 (not recommanded)
 ### Install git
