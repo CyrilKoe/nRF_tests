@@ -1,3 +1,5 @@
+This repository contains an introduction to the usage of the nRF connect SDK. It was realized for a job interview.
+
 ## Set-up your environment on Windows 10 (not recommanded)
 ### Install git
 https://git-scm.com/download/win
